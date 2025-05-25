@@ -1,0 +1,93 @@
+;;; -*- coding: utf-8; mode: emacs-lisp; lexical-binding: t -*-
+
+;; Apheleia is an Emacs package designed to run code formatters (e.g., Shfmt,
+;; Black and Prettier) asynchronously without disrupting the cursor position.
+(use-package apheleia
+  :ensure t
+  :commands (apheleia-mode
+             apheleia-global-mode)
+  :hook ((prog-mode . apheleia-mode)))
+
+(use-package cider
+  :ensure t
+  :init
+  (setq cider-auto-select-error-buffer nil)
+  (setq cider-redirect-server-output-to-repl nil)
+  (setq cider-repl-display-help-banner nil)
+  (setq cider-reuse-dead-repls 'auto)
+  (setq cider-show-error-buffer nil)
+  :config
+  (cider-enable-cider-completion-style t))
+
+(use-package cider-storm
+  :ensure t)
+
+(use-package magit
+  :ensure t
+  :config
+  (setq magit-repository-directories '(("~/Projects" . 3)))
+  (setq magit-section-visibility-indicator nil)
+  (setq magit-show-long-lines-warning nil))
+
+;; https://github.com/AmaiKinono/puni/issues/20
+(defun tvaughan/disable-puni-mode ()
+  "Disable `puni-mode' unless when eval-expression"
+  (unless (eq this-command 'eval-expression)
+    (puni-disable-puni-mode)))
+
+(use-package popper
+  :ensure t
+  :bind (("C-," . popper-toggle)
+         ("C-." . popper-cycle)
+         ("C-M-," . popper-toggle-type))
+  :config
+  (setq popper-display-control nil)
+  (setq popper-display-function #'display-buffer-in-direction)
+  (setq popper-reference-buffers
+        '("Output\\*$"
+          "^\\*Async Shell Command"
+          "^\\*Choices"
+          "^\\*HTTP Response"
+          "^\\*Messages"
+          "^\\*cider-repl"
+          help-mode
+          compilation-mode))
+  (popper-mode t)
+  (popper-echo-mode t))
+
+;; Use puni-mode globally and disable it for minibuffer-mode.
+(use-package puni
+  :defer t
+  :init
+  ;; The autoloads of Puni are set up so you can enable `puni-mode` or
+  ;; `puni-global-mode` before `puni` is actually loaded. Only after you press
+  ;; any key that calls Puni commands, it's loaded.
+  (puni-global-mode)
+  (add-hook 'minibuffer-setup-hook #'tvaughan/disable-puni-mode))
+
+(use-package rainbow-mode
+  :ensure t
+  :hook (text-mode . rainbow-mode))
+
+;; Tree-sitter in Emacs is an incremental parsing system introduced in Emacs 29
+;; that provides precise, high-performance syntax highlighting. It supports a
+;; broad set of programming languages, including Bash, C, C++, C#, CMake, CSS,
+;; Dockerfile, Go, Java, JavaScript, JSON, Python, Rust, TOML, TypeScript, YAML,
+;; Elisp, Lua, Markdown, and many others.
+(use-package treesit-auto
+  :ensure t
+  :custom
+  (treesit-auto-install 'prompt)
+  :config
+  (treesit-auto-add-to-auto-mode-alist 'all)
+  (global-treesit-auto-mode))
+
+(use-package web-mode
+  :ensure t
+  :mode
+  (("\\.html\\'" . web-mode))
+  :init
+  (setq web-mode-engines-alist '(("django" . "\\.html\\'"))))
+
+(provide 'setup-10development)
+;;; setup-10development.el ends here
