@@ -142,6 +142,11 @@ Given N, do this n many times."
   :config
   (ctrlf-mode t))
 
+(use-package rg
+  :ensure t
+  :config
+  (rg-enable-menu))
+
 (use-package define-word
   :ensure t
   :bind (("C-c d" . define-word-at-point)
@@ -158,7 +163,7 @@ Given N, do this n many times."
 
 (use-package olivetti
   :ensure t
-  :config
+  :init
   (setq olivetti-lighter nil))
 
 (use-package savehist

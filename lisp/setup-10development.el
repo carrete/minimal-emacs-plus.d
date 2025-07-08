@@ -85,9 +85,13 @@
 (use-package web-mode
   :ensure t
   :mode
-  (("\\.html\\'" . web-mode))
+  (("\\.html\\'" . web-mode)
+   ("\\.njk\\'" . web-mode))
   :init
-  (setq web-mode-engines-alist '(("django" . "\\.html\\'"))))
+  (setq web-mode-enable-current-column-highlight t)
+  (setq web-mode-enable-current-element-highlight t)
+  (setq web-mode-engines-alist '(("django" . "\\.html\\'")
+                                 ("django" . "\\.njk\\'"))))
 
 (provide 'setup-10development)
 ;;; setup-10development.el ends here
