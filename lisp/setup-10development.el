@@ -22,6 +22,17 @@
 (use-package cider-storm
   :ensure t)
 
+(use-package flycheck
+  :ensure t
+  :config
+  (add-hook 'after-init-hook #'global-flycheck-mode))
+
+(use-package flyover
+  :straight (flyover :type git :host github :repo "konrad1977/flyover")
+  :ensure t
+  :init
+  (add-hook 'flycheck-mode-hook #'flyover-mode))
+
 (use-package magit
   :ensure t
   :config
