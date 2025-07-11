@@ -6,7 +6,10 @@
   :ensure t
   :commands (apheleia-mode
              apheleia-global-mode)
-  :hook ((prog-mode . apheleia-mode)))
+  :hook ((prog-mode . apheleia-mode))
+  :config
+  (setf (alist-get 'shfmt apheleia-formatters)
+        '("shfmt" "-i" "4" "-bn" "-sr")))
 
 (use-package cider
   :ensure t
