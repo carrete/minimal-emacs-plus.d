@@ -47,6 +47,13 @@
 
 (use-package cider-storm)
 
+(use-package exec-path-from-shell
+  :config
+  (dolist (var '("GPG_AGENT_INFO" "LANG" "LC_COLLATE" "LC_TIME" "SSH_AGENT_PID" "SSH_AUTH_SOCK"))
+    (add-to-list 'exec-path-from-shell-variables var)))
+
+(use-package git-modes)
+
 (use-package flycheck
   :config
   (add-hook 'after-init-hook #'global-flycheck-mode))
