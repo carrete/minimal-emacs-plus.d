@@ -32,6 +32,7 @@
   (setq cider-repl-pop-to-buffer-on-connect 'display-only)
   (setq cider-reuse-dead-repls 'auto)
   (setq cider-show-error-buffer nil)
+  (setq cider-test-fail-fast nil)
   (setq cider-test-show-report-on-success t)
   (setq nrepl-hide-special-buffers t)
   :config
