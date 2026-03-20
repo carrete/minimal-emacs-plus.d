@@ -82,6 +82,8 @@
   (setq magit-repository-directories '(("~/Projects" . 3)))
   (setq magit-show-long-lines-warning nil))
 
+(use-package markdown-mode)
+
 (use-package popper
   :bind (("C-," . popper-toggle)
          ("C-." . popper-cycle)
